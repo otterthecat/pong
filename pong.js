@@ -95,13 +95,13 @@ function movePaddle(event){
     if(event.keyCode === 38 && paddleY > 0){
         isPaddleUp = true;
         isPaddleDown = false;
-        //paddleY -= paddleInc
+
     }
 
     if(event.keyCode === 40 && paddleY + paddleHeight < canvasHeight){
         isPaddleDown = true
         isPaddleUp = false;
-       // paddleY += paddleInc
+
     }
 
 }
