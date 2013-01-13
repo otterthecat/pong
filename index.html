@@ -3,19 +3,51 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title></title>
-
         <style>
             canvas{border: 1px solid black;}
+            label{display: block;}
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+            li {display: inline}
+            li:last-child{float: right;}
+
+            .canvasHolder{
+                width: 600px;
+                height: 300px;
+                margin: 0 auto;
+            }
         </style>
 
 	</head>
 
 	<body>
-		<canvas id="canvas" width="600" height="300"></canvas>
-        <button id="stop">stop</button>
-	</body>
+        <ul>
+            <li>
+                Player 1: <span class="player one"> Waiting for Player 1 </span><span class="score one"></span>
+            </li>
+            <li>
+                Player 2: <span class="player two"> Waiting for Player 2 </span><span class="score two"></span>
+            </li>
+		</ul>
 
+        <div class='canvasHolder'>
+            <canvas id="canvas" width="600" height="300"></canvas>
+        </div>
+
+        <form action='' method='post'>
+            <h3>Fill in to play:</h3> 
+            <label for="name">Name: <input type="text" id="name" name="name"/></label>
+            <button id="addName">add</button>
+        </form>
+	</body>
+        <script type="text/javascript" src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.js"></script>
-        <script type="text/javascript" src="pong.js"></script>
+        <script type="text/javascript" src="client/init.js"></script>
+        <script type="text/javascript" src="client/players.js"></script>
+        <script type="text/javascript" src="client/pong.js"></script>
 
 </html>
