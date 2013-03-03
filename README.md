@@ -10,4 +10,6 @@ Multiplayer Branch
 ------------------
 
 [This Branch](https://github.com/otterthecat/pong/tree/multiplayer) 
-is still in progress, but allows for 2 client access via SocketIO and will ultimmately be a 2 player game. Currently not fully functional. Most recent change has the ball sync up between 2 browsers.
+is still in progress, but allows for 2 client access via SocketIO and will ultimmately be a 2 player game. 
+Currently not fully functional. Most recent change allows for 2 clients to play at the same time (but doesn't)
+keep score.
