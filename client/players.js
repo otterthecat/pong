@@ -53,8 +53,15 @@ Player.prototype.movePaddle = function(eventCode){
 		this.paddle.isDown = true;
 	}
 
-	return this.paddle;
+	socket.emit("paddleMove", this.paddle);
 };
+
+
+Player.prototype.stopPaddle = function(){
+
+    isPaddleDown = false;
+    isPaddleUp = false;
+}
 
 
 Player.prototype.setPaddle = function(paddle){

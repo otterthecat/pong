@@ -6,8 +6,8 @@ var canvasHeight = $("#canvas").height();
 var xpos = 50;
 var ypos = 50;
 
-var directionX = 5;
-var directionY = 5;
+var directionX = 1;
+var directionY = 1;
 
 var paddleHeight = canvasHeight/4;
 var paddleWidth = canvasWidth/90;
@@ -18,10 +18,10 @@ var paddleInc = 4;
 
 var player2Height = paddleHeight;
 var player2Width = paddleWidth;
-var player2Y = 50;
+var player2Y = 0;
 var player2X = canvasWidth - paddleX + player2Width;
 
-var interval, isPaddleUp, isPaddleDown;
+var interval, isPaddleUp, isPaddleDown, isPaddle2Up, isPaddle2Down;
 
 function makeBall(){
     ctx.beginPath();
@@ -62,18 +62,20 @@ function doit(){
     ypos += directionY;
 
 
-    if(isPaddleUp && paddleY > 0)
-        paddleY -= paddleInc
+    if(isPaddleUp && paddleY > 0) {
+        paddleY -= paddleInc;
+    }
 
+    if(isPaddle2Up && player2Y > 0) {
+        player2Y -= paddleInc;
+    }
 
-    if(isPaddleDown && paddleY + paddleHeight < canvasHeight)
-        paddleY += paddleInc
-    
-    if(player2Y + directionY + player2Height/2 >= canvasHeight){
-
-    } else {
-    
-        player2Y += directionY;
+    if(isPaddleDown && paddleY + paddleHeight < canvasHeight){
+        paddleY += paddleInc;
+    }
+   
+    if(isPaddle2Down && player2Y + paddleHeight < canvasHeight){
+        player2Y += paddleInc;
     }
 
     
@@ -91,15 +93,26 @@ function doit(){
 
 function movePaddle(event){
 
-    if(event.keyCode === 38 && paddleY > 0){
-        isPaddleUp = true;
-        isPaddleDown = false;
+    var the_paddle = (player.paddle.position === 'left') ? paddleY : player2Y;
+
+    if(event.keyCode === 38 && the_paddle > 0){
+
+
+        console.log('paddleMove up');
+        console.log(player);
+        player.paddle.isUp = true;
+        player.paddle.isDown = false;
+        socket.emit('paddleMove', player.paddle);
 
     }
 
-    if(event.keyCode === 40 && paddleY + paddleHeight < canvasHeight){
-        isPaddleDown = true
-        isPaddleUp = false;
+    if(event.keyCode === 40 && the_paddle + paddleHeight < canvasHeight){
+
+        console.log('paddleMove down');
+        console.log(player);
+        player.paddle.isUp = false;
+        player.paddle.isDown = true;
+        socket.emit('paddleMove', player.paddle);
 
     }
 
@@ -107,8 +120,11 @@ function movePaddle(event){
 
 
 function stopPaddle(){
-    isPaddleDown = false;
-    isPaddleUp = false;
+    
+    player.paddle.isUp = false;
+    player.paddle.isDown = false;
+
+    socket.emit('paddleMove', player.paddle);
 }
 
 

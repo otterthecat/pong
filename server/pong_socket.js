@@ -72,14 +72,16 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('paddleMove', function(data){
 
-		if(data.player1 === true){
+		if(data.position === 'left'){
 
-			Referee.players.player1.movePaddle(data.eventValue);
+			socket.emit('paddle_1_position', data);
+			socket.broadcast.to('active_players').emit('paddle_1_position', data);
 		}
 
-		if(data.player2 == true){
+		if(data.position === 'right'){
 
-			Referee.players.player2.movePaddle(dataEventValue);
+			socket.emit('paddle_2_position', data);
+			socket.broadcast.to('active_players').emit('paddle_2_position', data);
 		}
 
 	});
