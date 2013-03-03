@@ -6,10 +6,34 @@ Proof of concept sketch of the classic "Pong" game using html's Canvas tag and J
 
 Heavily based on https://github.com/llimllib/refresh-canvas
 
-Multiplayer Branch
-------------------
+Requires Node.js and SocketIO (SocketIO included in this repo).
 
-[This Branch](https://github.com/otterthecat/pong/tree/multiplayer) 
-is still in progress, but allows for 2 client access via SocketIO and will ultimmately be a 2 player game. 
-Currently not fully functional. Most recent change allows for 2 clients to play at the same time (but doesn't)
-keep score.
+
+multi client
+-------------
+
+This version can be shared between 2 clients (browsers) at once.
+
+First, ensure the main directory is accessible in a webserver.
+
+Then, have NODE start the server by calling the file 'pong_socket.js' in the server directory.
+For instance, if you are in the main directory, you can open up a terminal window and enter
+
+	node server/pong_socket.js
+
+The socket server will then be running on 127.0.0.1 port 4000.
+
+You can then access the index.html file in your browsers (say, firefox and chromium).
+
+Once each browser assigns itself a name, the app will start running.
+Currently, player 1 defaults to the left paddle, and player 2 the right. Score is not yet counted,
+but 2 players/clients can now play against each other.
+
+TODO
+----
+
+Refactor pong.js so it's no longer hideous.
+
+Allow scoring functionality
+
+Save Player Data (probalby with MongoDB)
