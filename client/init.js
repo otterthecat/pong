@@ -1,7 +1,14 @@
+// global object to store individual players
+// ie - one player per client
 var player;
 
-var socket = io.connect('http://127.0.0.1:4000');
+// start up socket.io server
+var socket = io.connect('http://sol.local:4000');
 
+/* Events from Server
+****************************************************/
+
+// 
 socket.on('player1', function(data) {
 
     player = new Player(data.details);
@@ -9,6 +16,21 @@ socket.on('player1', function(data) {
 });
 
 
+socket.on('player1Ready', function(data) {
+
+    $('.player.one').text(data.details.name);
+});
+
+
+// updated paddle position from server, and updates
+// pong game on both clients
+socket.on('paddle_1_position', function(data){
+
+    isPaddleUp = data.isUp;
+    isPaddleDown = data.isDown;
+});
+
+// Update Player2's 
 socket.on('player2', function(data) {
 
     player = new Player(data.details);
@@ -16,56 +38,45 @@ socket.on('player2', function(data) {
     $('.player.two').text(player.details.name);
 });
 
-
-socket.on('player1Ready', function(data) {
-
-    console.log('Player 1 is ready to rumble');
-
-    $('.player.one').text(data.details.name);
-});
-
+// fire when player 2 is added
 socket.on('player2Ready', function(data) {
 
-    console.log('Player 2 is hungry for victory');
     $('.player.two').text(data.details.name);
 });
 
-socket.on('playersReady', function(data) {
+// used to update player 2's paddle.
+socket.on('paddle_2_position', function(data){
 
-    console.log('Oh, it\'s ON!', data);
+    isPaddle2Up = data.isUp;
+    isPaddle2Down = data.isDown;
 });
 
 
+socket.on('playersReady', function(data) {
+
+   // placeholder to execute when both players sign in
+});
+
+// get updated ball position from server, and then
+// redraw the pong field
 socket.on('ball_position', function(data) {
 
     xpos = data.x;
     ypos = data.y;
-    
-   // interval = setInterval(doit, 15);
 
     doit();
 
+    // Since player 1's client is what is syncing up the ball,
+    // we check if the current user is also "player 1", and if so
+    //  give the server the current ball position for updating
     if(player.details.name === $('.player.one').text() ){
         socket.emit('updateBall', {x: xpos, y: ypos});
     }
 });
 
-socket.on('paddle_1_position', function(data){
 
-
-    console.log("paddle 1 position ::" + data.isUp + " :: " + data.isDown);
-    isPaddleUp = data.isUp;
-    isPaddleDown = data.isDown;
-});
-
-socket.on('paddle_2_position', function(data){
-
-
-    console.log("paddle 2 position ::" + data.isUp + " :: " + data.isDown);
-    isPaddle2Up = data.isUp;
-    isPaddle2Down = data.isDown;
-});
-
+/* Allow User to add name and update 'player' global
+***************************************************************************/
 
 $('#addName').on('click', function(event) {
     event.preventDefault();

@@ -14,7 +14,8 @@ function Player(opts){
 		'isDown': false
 	};
 
-
+	// really just using .merge() for now
+	// when instantiating, but could expand later
 	this.utils = {
 
 		'merge': function(baseObj, newObj){
