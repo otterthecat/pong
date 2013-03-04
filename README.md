@@ -17,9 +17,9 @@ This version can be shared between 2 clients (browsers) at once.
 First, ensure the main directory is accessible in a webserver.
 
 Then, have NODE start the server by calling the file 'pong_socket.js' in the server directory.
-For instance, if you are in the main directory, you can open up a terminal window and enter
+Simply go into the /server directory and use node to start the server
 
-	node server/pong_socket.js
+	node pong_socket.js
 
 The socket server will then be running on 127.0.0.1 port 4000.
 
